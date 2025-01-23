@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Number Lookup</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <style>
+        body {
+            background-image: url("images/MTM_logo.jpg");
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-color: rgba(255,255,255,0.7);
+            background-blend-mode: lighten;
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: rgb(90, 90, 90);
+            color: white;
+            text-align: center;
+        }
+    </style>
+
+    <div class="container">
+        <div class="input-container">
+            <label for="phone"><b>Enter phone number:</b></label>
+            <input type="tel" id="phone" placeholder="Phone number" required>
+            <button id="submitPhone" onclick="validatePhoneNumber(event)">Submit</button>
+            <p id="errorMessage" style="color: red; display: none;">Phone number must be exactly 10 digits and only contain numbers (0-9)</p>
+        </div>
+
+        <div class="phone-number-container hidden">
+            <h1>Phone Number: <span id="phoneNumberDisplay"></span></h1>
+        </div>
+
+        <div class="buttons-container hidden" id="buttonsContainer">
+            <button onclick="goToWebsite(1)">Virtuous Lookup</button>
+            <button onclick="goToWebsite(2)">Whitepages Lookup</button>
+            <button onclick="goToWebsite(3)">Been Verified Lookup</button>
+        </div>
+    </div>
+    <script src="js/index.js"></script>
+    <script src="js/create_links.js"></script>
+
+    <div class="footer">
+        <p>Report any issues to michaelhenke@meltrotter.org</p>
+    </div>
+</body>
+</html>

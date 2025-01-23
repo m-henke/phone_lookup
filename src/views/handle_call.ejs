@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Number Lookup</title>
+    <link rel="stylesheet" href="css/handle_call.css">
+</head>
+<body>
+    <style>
+        body {
+            background-image: url("images/MTM_logo.jpg");
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-color: rgba(255,255,255,0.7);
+            background-blend-mode: lighten;
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: rgb(90, 90, 90);
+            color: white;
+            text-align: center;
+        }
+    </style>
+    <% if (!found_user) { %>
+        <div class="container"></div>
+            <div class="phone-number-container">
+                <h1>Phone Number: <%= phone_number %></h1>
+            </div>
+
+            <div class="buttons-container" id="buttonsContainer">
+                <button onclick="goToWebsite(1)">Virtuous Lookup</button>
+                <button onclick="goToWebsite(2)">Whitepages Lookup</button>
+                <button onclick="goToWebsite(3)">Been Verified Lookup</button>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="contact-card">
+            <h3>Contact Information</h3>
+            <p><span class="label">Full Name:</span> <%= user.FullName %></p>
+            <p><span class="label">IndividualID:</span> <%= user.IndividualID %></p>
+            <p><span class="label">Contact ID:</span> <%= user.ContactID %></p>
+            <p><span class="label">Phone Number:</span> <%= phone_number %></p>
+            <p><span class="label">Email:</span> <%= user.Email %></p>
+            <p><span class="label">Last Gift Date:</span> <%= user.LastGiftDate %></p>
+            <p><span class="label">Last Gift Amount:</span> $<%= user.LastGiftAmount %></p>
+            <p><span class="label">Virtuous Link:</span> <a href="#" onclick="GenerateVirtuousLink('<%= user.ContactID %>'); return false;">Click to open virtuous profile</a></p>
+            <% if (note != undefined) { %>
+                <p><span class="label">Last Note Date:</span> <%= note.noteDate %></p>
+                <button class="popup-btn" onclick="open_popup()">View last note</button>
+            <% } %>
+        </div>
+    <% } %>
+    
+    <script>
+        function open_popup() {
+            const popup = window.open('', 'Last Note', 'width=600,height=400,scrollbars=yes');
+            popup.document.open();
+            popup.document.write('<html><head><title>Last Note</title></head><body>');
+            popup.document.write(`<h3>${note.type}</h3>`);
+            // popup.document.write(note.note);
+            popup.document.write('</body></html>');
+            popup.document.close();
+        }
+    </script>
+
+    <script src="js/handle_call.js"></script>
+    <script src="js/create_links.js"></script>
+
+    <div class="footer">
+        <p>Report any issues to michaelhenke@meltrotter.org</p>
+    </div>
+</body>
+</html>
