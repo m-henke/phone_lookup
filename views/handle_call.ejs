@@ -27,15 +27,21 @@
     </style>
 
     <div class="container">
+
         <div class="phone-number-container">
             <h1>Phone Number: <%= phone_number %></h1>
         </div>
 
-        <div class="buttons-container" id="buttonsContainer">
-            <button onclick="goToWebsite(1)">Virtuous Lookup</button>
-            <button onclick="goToWebsite(2)">Whitepages Lookup</button>
-            <button onclick="goToWebsite(3)">Been Verified Lookup</button>
-        </div>
+        <% if (!found_user) { %>
+            <div class="buttons-container" id="buttonsContainer">
+                <button onclick="goToWebsite(1)">Virtuous Lookup</button>
+                <button onclick="goToWebsite(2)">Whitepages Lookup</button>
+                <button onclick="goToWebsite(3)">Been Verified Lookup</button>
+            </div>
+        <% } else { %>
+            <p><%= user.FullName %></p>
+        <% } %>
+
     </div>
     <script src="js/handle_call.js"></script>
     <script src="js/create_links.js"></script>

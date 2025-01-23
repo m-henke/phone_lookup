@@ -62,18 +62,15 @@ server.get('/handle-call', async (req, res) => {
         }
         if (rows.length == 0) {
             log(`No entries found for ${formatted_number}`);
-            res.render('handle_call', {phone_number: formatted_number});
-            return;
         } else {
             log(`Found user: ${rows[0].FullName}`);
-            res.render('handle_call', {phone_number: formatted_number});
+            res.render('handle_call', {phone_number: formatted_number, found_user: true, user: rows[0]});
             return;
         }
     } catch (err) {
         log(`Error: ${err}`);
-        res.render('handle_call', {phone_number: formatted_number});
-        return;
     }
+    res.render('handle_call', {phone_number: formatted_number, found_user: false, user: null});
 });
 
 server.listen(port, () => {
