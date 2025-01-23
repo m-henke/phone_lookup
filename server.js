@@ -1,6 +1,8 @@
 const express = require('express');
 const server = express();
 const path = require('path');
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('data/VirtuousData.db');
 const port = 8080;
 
 function log(message) {
@@ -17,6 +19,18 @@ function log(message) {
     console.log(`[${formattedDateTime}] - ${message}`);
 }
 
+function queryDatabase(query, params = []) {
+    return new Promise((resolve, reject) => {
+        db.all(query, params, (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+}
+
 server.set('view engine', 'ejs');
 server.set('views', path.join(__dirname, 'views'));
 server.use(express.static(path.join(__dirname, 'public')));
@@ -25,22 +39,41 @@ server.get('/', (req, res) => {
     res.render('index');
 });
 
-server.get('/handle-call', (req, res) => {
+server.get('/handle-call', async (req, res) => {
     let number = req.query.phone_number;
 
     // Make sure number is valid
-    let formatted_number = number.toString().replace(/\D/g, '');
-    if (formatted_number.length != 10) {
-        log(`Received an invalid number: ${formatted_number}`);
+    if (number.length != 10) {
+        log(`Received an invalid number: ${number}`);
         res.redirect('/');
         return;
     }
 
     // Format number
-    formatted_number = "(".concat(formatted_number.slice(0, 3), ") ", formatted_number.slice(3, 6), "-", formatted_number.slice(6))
+    let formatted_number = "(".concat(number.slice(0, 3), ") ", number.slice(3, 6), "-", number.slice(6))
     log(`Received a call from: ${formatted_number}`);
 
-    res.render('handle_call', {phone_number: formatted_number});
+    // Pull data from database
+    try {
+        const rows = await queryDatabase('SELECT * FROM users WHERE PhoneNumber = ?', [number]);
+        if (rows.length > 1) {
+            log(`Error: Multiple entries found for ${formatted_number}`);
+            log("First result will be returned");
+        }
+        if (rows.length == 0) {
+            log(`No entries found for ${formatted_number}`);
+            res.render('handle_call', {phone_number: formatted_number});
+            return;
+        } else {
+            log(`Found user: ${rows[0].FullName}`);
+            res.render('handle_call', {phone_number: formatted_number});
+            return;
+        }
+    } catch (err) {
+        log(`Error: ${err}`);
+        res.render('handle_call', {phone_number: formatted_number});
+        return;
+    }
 });
 
 server.listen(port, () => {
