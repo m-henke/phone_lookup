@@ -16,3 +16,8 @@ function goToWebsite(buttonNumber) {
 
     window.open(baseURL + phoneNumber, "_blank")
 }
+
+function GenerateVirtuousLink(contact_id) {
+    let baseURL = "https://app.virtuoussoftware.com/Generosity/Contact/View/";
+    window.open(baseURL + contact_id, "_blank");
+}

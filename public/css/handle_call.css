@@ -17,6 +17,24 @@ body {
     margin-top: 20px;
 }
 
+.contact-card h3 {
+    text-align: center;
+}
+
+.contact-card p {
+    text-align: left;
+}
+
+.contact-card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
 button {
     padding: 10px 20px;
     margin: 5px;
