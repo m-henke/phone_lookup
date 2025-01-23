@@ -47,10 +47,26 @@
             <p><span class="label">Email:</span> <%= user.Email %></p>
             <p><span class="label">Last Gift Date:</span> <%= user.LastGiftDate %></p>
             <p><span class="label">Last Gift Amount:</span> $<%= user.LastGiftAmount %></p>
-            <p><span class="label">Last Note Date:</span> <%= user.LastNoteDate %></p>
             <p><span class="label">Virtuous Link:</span> <a href="#" onclick="GenerateVirtuousLink('<%= user.ContactID %>'); return false;">Click to open virtuous profile</a></p>
+            <% if (note != undefined) { %>
+                <p><span class="label">Last Note Date:</span> <%= note.noteDate %></p>
+                <button class="popup-btn" onclick="open_popup()">View last note</button>
+            <% } %>
         </div>
     <% } %>
+    
+    <script>
+        function open_popup() {
+            const popup = window.open('', 'Last Note', 'width=600,height=400,scrollbars=yes');
+            popup.document.open();
+            popup.document.write('<html><head><title>Last Note</title></head><body>');
+            popup.document.write(`<h3>${note.type}</h3>`);
+            // popup.document.write(note.note);
+            popup.document.write('</body></html>');
+            popup.document.close();
+        }
+    </script>
+
     <script src="js/handle_call.js"></script>
     <script src="js/create_links.js"></script>
 

@@ -3,6 +3,7 @@ const server = express();
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('data/VirtuousData.db');
+const axios = require('axios');
 const port = 8080;
 
 function log(message) {
@@ -27,6 +28,20 @@ function queryDatabase(query, params = []) {
             } else {
                 resolve(rows);
             }
+        });
+    });
+}
+
+function getContactNotes(contactID) {
+    return new Promise((resolve, reject) => {
+        axios.get(`https://api.virtuoussoftware.com/api/ContactNote/ByContact/${contactID}?sortBy=CreatedDateTime&descending=False&skip=0&take=1`, {
+            headers: { 'Authorization': `Bearer ${process.env.VIRTUOUS_TOKN}` }
+        })
+        .then(response => {
+            resolve(response.data.list[0]);
+        })
+        .catch(error => {
+            reject(error);
         });
     });
 }
@@ -64,13 +79,17 @@ server.get('/handle-call', async (req, res) => {
             log(`No entries found for ${formatted_number}`);
         } else {
             log(`Found user: ${rows[0].FullName}`);
-            res.render('handle_call', {phone_number: formatted_number, found_user: true, user: rows[0]});
+            const note = await getContactNotes(rows[0].ContactID);
+            if (note == undefined) {
+                log(`No notes found for ${rows[0].FullName}`);
+            }
+            res.render('handle_call', {phone_number: formatted_number, found_user: true, user: rows[0], note});
             return;
         }
     } catch (err) {
         log(`Error: ${err}`);
     }
-    res.render('handle_call', {phone_number: formatted_number, found_user: false, user: null});
+    res.render('handle_call', {phone_number: formatted_number, found_user: false, user: null, note: null});
 });
 
 server.listen(port, () => {
