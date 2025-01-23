@@ -91,4 +91,4 @@ if __name__ == "__main__":
     db_path = os.path.join(os.getcwd(), os.path.join("data", "VirtuousData.db"))
     dbManager = DatabaseManager(data_path, db_path)
     # dbManager.create_database()
-    print(dbManager.query_database(f"SELECT * FROM users WHERE PhoneNumber = {"6164057876"}"))
+    print(dbManager.query_database(f"SELECT COUNT(IndividualID) FROM users"))
