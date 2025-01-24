@@ -8,3 +8,4 @@ Volage link looks like this: http://127.0.0.1:8080/handle-call?phone_number=6164
 To create the local database download this query with the pre selected fields https://app.virtuoussoftware.com/Generosity/Query/Editor/5400
 Put the downloaded csv file in the 'src/data' folder
 Once it is in the folder run the 'create_database.py' file
+Do not re-run 'create_database.py' after the database has been created
