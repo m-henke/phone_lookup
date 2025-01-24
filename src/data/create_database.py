@@ -1,3 +1,4 @@
+import requests
 import sqlite3
 import os
 
@@ -47,9 +48,24 @@ class DatabaseManager:
             ret.append(line)
         print(f"Original: {len(data)} entries\nCleaned: {len(ret)} entries")
         return [(line[0], int(line[1]), int(line[2]), line[3], line[4], line[5], line[6], line[7]) for line in ret]
+    
+    @staticmethod
+    def getNoteTypes():
+        url = "https://api.virtuoussoftware.com/api/ContactNote/Types"
+        headers = {'Authorization': f'Bearer {os.getenv("VIRTUOUS_TOKN")}'}
+        try:
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()  # Raise an exception for HTTP errors
+            data = response.json()
+            return [(note_type,) for note_type in list(data.values())]
+        except requests.exceptions.RequestException as e:
+            print("Note Types Were Not Retrieved")
+            print(e)
+            return []
 
     def create_database(self):
-        data = self.cleanData(self.readCSV(self.data_path))
+        user_data = self.cleanData(self.readCSV(self.data_path))
+        note_types = self.getNoteTypes()
         self.cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS users (
@@ -78,7 +94,23 @@ class DatabaseManager:
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            data
+            user_data
+        )
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS noteTypes (
+                NoteType TEXT NOT NULL
+            )
+            """
+        )
+        self.cursor.executemany(
+            """
+            INSERT INTO noteTypes (
+                NoteType
+            )
+            VALUES (?)
+            """,
+            note_types
         )
 
     def query_database(self, query):
@@ -91,4 +123,5 @@ if __name__ == "__main__":
     db_path = os.path.join(os.getcwd(), "src", "data", "VirtuousData.db")
     dbManager = DatabaseManager(data_path, db_path)
     dbManager.create_database()
-    print(dbManager.query_database(f"SELECT COUNT(IndividualID) FROM users"))
+    print("number contacts", dbManager.query_database(f"SELECT COUNT(IndividualID) FROM users"))
+    print("number note types", dbManager.query_database(f"SELECT COUNT(NoteType) FROM noteTypes"))
