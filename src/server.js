@@ -73,7 +73,10 @@ server.get('/handle-call', async (req, res) => {
     let formatted_number = "(".concat(number.slice(0, 3), ") ", number.slice(3, 6), "-", number.slice(6))
     log(`Received a call from: ${formatted_number}`);
 
-    // Pull data from database
+    const noteTypes = await queryDatabase('SELECT * FROM noteTypes');
+    log(noteTypes[0].NoteType)
+
+    // Retrieve needed page data
     try {
         const rows = await queryDatabase('SELECT * FROM users WHERE PhoneNumber = ?', [number]);
         if (rows.length > 1) {
@@ -92,14 +95,14 @@ server.get('/handle-call', async (req, res) => {
                 cleanNote(note);
             }
             // Render page with user info
-            res.render('handle_call', {phone_number: formatted_number, found_user: true, user: rows[0], note});
+            res.render('handle_call', {phone_number: formatted_number, found_user: true, user: rows[0], note, noteTypes});
             return;
         }
     } catch (err) {
         log(`Error: ${err}`);
     }
     // Render page without user info
-    res.render('handle_call', {phone_number: formatted_number, found_user: false, user: null, note: null});
+    res.render('handle_call', {phone_number: formatted_number, found_user: false, user: null, note: null, noteTypes});
 });
 
 server.listen(port, () => {
