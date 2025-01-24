@@ -30,9 +30,14 @@ body {
     justify-content: center;
     flex-direction: column;
     padding: 20px;
+    margin: 5px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    width: 400px;
+    word-wrap: break-word; 
+    word-break: break-word; 
+    overflow-wrap: break-word;
 }
 
 button {

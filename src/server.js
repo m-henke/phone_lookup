@@ -46,6 +46,11 @@ function getContactNotes(contactID) {
     });
 }
 
+function cleanNote(note) {
+    note.note = note.note.replace(/<\/?[^>]+(>|$)/g, "");
+    note.note = note.note.replace(/&nbsp;/g, " ");
+}
+
 server.set('view engine', 'ejs');
 server.set('views', path.join(__dirname, 'views'));
 server.use(express.static(path.join(__dirname, 'public')));
@@ -79,16 +84,21 @@ server.get('/handle-call', async (req, res) => {
             log(`No entries found for ${formatted_number}`);
         } else {
             log(`Found user: ${rows[0].FullName}`);
+            // Get contact notes
             const note = await getContactNotes(rows[0].ContactID);
             if (note == undefined) {
                 log(`No notes found for ${rows[0].FullName}`);
+            } else {
+                cleanNote(note);
             }
+            // Render page with user info
             res.render('handle_call', {phone_number: formatted_number, found_user: true, user: rows[0], note});
             return;
         }
     } catch (err) {
         log(`Error: ${err}`);
     }
+    // Render page without user info
     res.render('handle_call', {phone_number: formatted_number, found_user: false, user: null, note: null});
 });
 
