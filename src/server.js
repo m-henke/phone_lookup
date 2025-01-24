@@ -46,6 +46,25 @@ function getContactNotes(contactID) {
     });
 }
 
+// this needs to be updated to however
+function postNewNote(contactID, noteType, noteContent) {
+    return new Promise((resolve, reject) => {
+        const url = "https://api.virtuoussoftware.com/api/ContactNote";
+        data = {
+            contactId: contactID,
+            type: noteType,
+            note: noteContent,
+        }
+        axios.post(url, data, 
+            {headers: {'Authorization': `Bearer ${process.env.VIRTUOUS_TOKN}`, 'Content-Type': 'application/json'}
+        }).then(response => {
+            resolve(response.data);
+        }).catch(error => {
+            reject(error);
+        });
+    });
+}
+
 function cleanNote(note) {
     note.note = note.note.replace(/<\/?[^>]+(>|$)/g, "");
     note.note = note.note.replace(/&nbsp;/g, " ");
@@ -57,6 +76,10 @@ server.use(express.static(path.join(__dirname, 'public')));
 
 server.get('/', (req, res) => {
     res.render('index');
+});
+
+server.post('/new-note', (req, res) => {
+    console.log(req.body);
 });
 
 server.get('/handle-call', async (req, res) => {
@@ -74,7 +97,6 @@ server.get('/handle-call', async (req, res) => {
     log(`Received a call from: ${formatted_number}`);
 
     const noteTypes = await queryDatabase('SELECT * FROM noteTypes');
-    log(noteTypes[0].NoteType)
 
     // Retrieve needed page data
     try {

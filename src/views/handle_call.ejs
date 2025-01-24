@@ -72,7 +72,7 @@
                 </select>
                 <label for="noteContent">Note:</label>
                 <textarea id="noteContent" name="noteContent" required></textarea><br>
-                <button type="button" onclick="submitNote()">Submit</button>
+                <button type="button" onclick="submitNote('<%= user.ContactID %>')">Submit</button>
             </form>
         </div>
     </div>
