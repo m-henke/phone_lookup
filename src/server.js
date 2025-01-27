@@ -60,7 +60,7 @@ function postNewNote(contactID, noteType, noteContent) {
         }).then(response => {
             resolve(response.data);
         }).catch(error => {
-            reject(error);
+            reject(error.data);
         });
     });
 }
@@ -73,13 +73,22 @@ function cleanNote(note) {
 server.set('view engine', 'ejs');
 server.set('views', path.join(__dirname, 'views'));
 server.use(express.static(path.join(__dirname, 'public')));
+server.use(express.json());
 
 server.get('/', (req, res) => {
     res.render('index');
 });
 
-server.post('/new-note', (req, res) => {
-    console.log(req.body);
+server.post('/new-note', async (req, res) => {
+    postNewNote(req.body.contactId, req.body.type, req.body.note).then(response => {
+        res.json({
+            success: true
+        });
+    }).catch(error => {
+        res.json({
+            success: false
+        });
+    });
 });
 
 server.get('/handle-call', async (req, res) => {
