@@ -17,7 +17,7 @@ function log(message) {
     second: '2-digit',
     hour12: true, 
     }).format(currentDate).replace(',', '');
-    console.log(`[${formattedDateTime}] - ${message}`);
+    console.log(`[${formattedDateTime}] ${message}`);
 }
 
 function queryDatabase(query, params = []) {
