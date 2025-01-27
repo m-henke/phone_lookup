@@ -58,25 +58,24 @@
                 <p><span class="label"></span> <%= note.note %></p>
             </div>
         <% } %>
-    <% } %>
-
-    <div id="noteModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Add New Note</h2>
-            <form id="noteForm">
-                <label for="noteType">Type:</label>
-                <select id="noteType" name="noteType" required>
-                    <% for (let i = 0; i < noteTypes.length; i++) { %>
-                        <option value="<%= noteTypes[i].NoteType %>"><%= noteTypes[i].NoteType %></option>
-                    <% } %>
-                </select>
-                <label for="noteContent">Note:</label>
-                <textarea id="noteContent" name="noteContent" required></textarea><br>
-                <button type="button" onclick="submitNote('<%= user.ContactID %>')">Submit</button>
-            </form>
+        <div id="noteModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Add New Note</h2>
+                <form id="noteForm">
+                    <label for="noteType">Type:</label>
+                    <select id="noteType" name="noteType" required>
+                        <% for (let i = 0; i < noteTypes.length; i++) { %>
+                            <option value="<%= noteTypes[i].NoteType %>"><%= noteTypes[i].NoteType %></option>
+                        <% } %>
+                    </select>
+                    <label for="noteContent">Note:</label>
+                    <textarea id="noteContent" name="noteContent" required></textarea><br>
+                    <button type="button" onclick="submitNote('<%= user.ContactID %>')">Submit</button>
+                </form>
+            </div>
         </div>
-    </div>
+    <% } %>
 
     <script src="js/handle_call.js"></script>
     <script src="js/create_links.js"></script>
