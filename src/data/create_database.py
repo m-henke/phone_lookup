@@ -47,7 +47,7 @@ class DatabaseManager:
                 continue
             ret.append(line)
         print(f"Original: {len(data)} entries\nCleaned: {len(ret)} entries")
-        return [(line[0], int(line[1]), int(line[2]), line[3], line[4], line[5], line[6], line[7]) for line in ret]
+        return [(line[0], int(line[1]), int(line[2]), line[3], line[4], line[5], line[6]) for line in ret]
     
     @staticmethod
     def getNoteTypes():
@@ -75,8 +75,7 @@ class DatabaseManager:
                 PhoneNumber TEXT,
                 Email TEXT,
                 LastGiftDate TEXT,
-                LastGiftAmount TEXT,
-                LastNoteDate TEXT
+                LastGiftAmount TEXT
             )
             """
         )
@@ -89,10 +88,9 @@ class DatabaseManager:
                 PhoneNumber,
                 Email,
                 LastGiftDate, 
-                LastGiftAmount, 
-                LastNoteDate
+                LastGiftAmount
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             user_data
         )
