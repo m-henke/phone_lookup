@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 function addNewNote() {
     document.getElementById('noteModal').style.display = 'block';
 }
@@ -25,10 +27,16 @@ function submitNote(contactID) {
     })
     .then(response => response.json())
     .then(data => {
+        const responseMessage = document.getElementById('responseMessage');
+        responseMessage.style.display = 'block';
         if (data.success == true) {
             console.log('Note added successfully!');
+            responseMessage.textContent = 'Note added successfully';
+            responseMessage.style.color = 'green';
         } else {
             console.log('Failed to add note.');
+            responseMessage.textContent = 'Failed to add note';
+            responseMessage.style.color = 'red';
         }
     })
     .catch((error) => {
