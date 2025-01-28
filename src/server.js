@@ -31,9 +31,8 @@ server.post('/new-note', async (req, res) => {
 });
 
 server.get('/handle-call', async (req, res) => {
-    const number = req.query.phone_number;
-    const user_name = req.query.user_name;
-    const formatted_number = "(".concat(number.slice(0, 3), ") ", number.slice(3, 6), "-", number.slice(6))
+    const { phone_number: number, user_name } = req.query;
+    const formatted_number = `(${number.slice(0, 3)}) ${number.slice(3, 6)}-${number.slice(6)}`;
 
     if (number.length != 10) {
         log(`Received an invalid number: ${formatted_number}`);
