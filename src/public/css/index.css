@@ -10,7 +10,14 @@ body {
 
 .container {
     text-align: center;
-    padding-top: 540px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 .hidden {
