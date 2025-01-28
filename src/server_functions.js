@@ -30,6 +30,23 @@ function queryDatabase(query, params = []) {
     });
 }
 
+function insertDatabase(params = []) {
+    const query = " \
+        INSERT INTO users ( \
+            FullName, \
+            IndividualID, \
+            ContactID, \
+            PhoneNumber, \
+            Email, \
+            LastGiftDate, \
+            LastGiftAmount \
+        ) \
+        VALUES (?, ?, ?, ?, ?, ?, ?) \
+        "
+    db.run(query, params);
+    log("Successfully inserted into local database")
+}
+
 // Gets the most recent note for a contact
 function getContactNotes(contactID) {
     return new Promise((resolve, reject) => {
@@ -64,8 +81,8 @@ function postNewNote(contactID, noteType, noteContent) {
     });
 }
 
-// Searches Virtuous for a contact based on phone number
-function searchForContact(number) {
+// Searches Virtuous for an individual based on phone number
+function searchForIndividual(number) {
     return new Promise((resolve, reject) => {
         data = { 
             "groups": [ 
@@ -91,6 +108,24 @@ function searchForContact(number) {
     });
 }
 
+// Search virtuous for contact to get gift info
+function searchForContact(contactId) {
+    return new Promise((resolve, reject) => {
+        const url = "https://api.virtuoussoftware.com/api/Contact/" + contactId;
+        axios.get(url, {
+            headers: {'Authorization': `Bearer ${process.env.VIRTUOUS_TOKN}`, 'Content-Type': 'application/json'}
+        }).then(response => {
+            resolve(
+                {
+                    date: response.lastGiftDate || "", 
+                    amount: response.lastGiftAmount || ""
+                });
+        }).catch(error => {
+            reject(error.data);
+        });
+    });
+}
+
 // Removes html tags from note
 function cleanNote(note) {
     note.note = note.note.replace(/<\/?[^>]+(>|$)/g, "");
@@ -100,8 +135,10 @@ function cleanNote(note) {
 module.exports = {
     log,
     queryDatabase,
+    insertDatabase,
     getContactNotes,
     postNewNote,
+    searchForIndividual,
     searchForContact,
     cleanNote
 };

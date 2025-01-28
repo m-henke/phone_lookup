@@ -1,4 +1,4 @@
-const { log, queryDatabase, getContactNotes, postNewNote, searchForContact, cleanNote } = require('./server_functions');
+const { log, queryDatabase, insertDatabase, getContactNotes, postNewNote, searchForIndividual, searchForContact, cleanNote } = require('./server_functions');
 const express = require('express');
 const path = require('path');
 const server = express();
@@ -31,14 +31,15 @@ server.post('/new-note', async (req, res) => {
 });
 
 server.get('/handle-call', async (req, res) => {
-    let number = req.query.phone_number;
+    const number = req.query.phone_number;
+    const formatted_number = "(".concat(number.slice(0, 3), ") ", number.slice(3, 6), "-", number.slice(6))
+
     if (number.length != 10) {
-        log(`Received an invalid number: ${number}`);
+        log(`Received an invalid number: ${formatted_number}`);
         res.redirect('/');
         return;
     }
 
-    let formatted_number = "(".concat(number.slice(0, 3), ") ", number.slice(3, 6), "-", number.slice(6))
     log(`Received a call from: ${formatted_number}`);
 
     // Search database for user based on phone number
@@ -54,14 +55,35 @@ server.get('/handle-call', async (req, res) => {
         try {
             log(`No entries in database for ${formatted_number}`);
             log(`Searching Virtuous for contact with phone number: ${formatted_number}`);
-            rows = await searchForContact(number);
+            rows = await searchForIndividual(number);
         } catch (err) {
             log(`Error: ${err}`);
         }
 
         // Add contact to local database
         if (rows.length > 0) {
-
+            var email = "";
+            for (let i = 0; i < rows[0].contactMethods.length; i++) {
+                if (rows[0].contactMethods[i].isPrimary && rows[0].contactMethods[i].type.includes("Email")) {
+                    email = rows[0].contactMethods[i].value;
+                    break;
+                }
+            }
+            var giftData;
+            try {
+                giftData = await searchForContact(rows[0].contactId);
+                const data = [
+                    `${rows[0].firstName} ${rows[0].lastName}`,
+                    rows[0].id, rows[0].contactId,
+                    number, email,
+                    giftData.date, giftData.amount
+                ]
+                insertDatabase(data);
+                rows = await queryDatabase('SELECT * FROM users WHERE PhoneNumber = ?', [number])
+            } catch (err) {
+                log(`Error: ${err}`);
+                log(`Contact not added to local database`)
+            }
         }
     }
 
@@ -75,11 +97,16 @@ server.get('/handle-call', async (req, res) => {
     log(`Found user: ${rows[0].FullName}`);
 
     // Get contact notes
-    const note = await getContactNotes(rows[0].ContactID);
-    if (note == undefined) {
-        log(`No notes found for: ${rows[0].FullName}`);
-    } else {
-        cleanNote(note);
+    var note;
+    try {
+        note = await getContactNotes(rows[0].ContactID);
+        if (note == undefined) {
+            log(`No notes found for: ${rows[0].FullName}`);
+        } else {
+            cleanNote(note);
+        }
+    } catch (err) {
+        log(`Error: ${err}`);
     }
 
     // Get note types
