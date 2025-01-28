@@ -30,6 +30,7 @@ function queryDatabase(query, params = []) {
     });
 }
 
+// Insert new user into the database
 function insertDatabase(params = []) {
     const query = " \
         INSERT INTO users ( \
