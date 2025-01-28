@@ -64,13 +64,14 @@ function getContactNotes(contactID) {
 }
 
 // Adds a new note to Virtuous profile
-function postNewNote(contactID, noteType, noteContent) {
+function postNewNote(contactID, noteType, noteContent, userName) {
     return new Promise((resolve, reject) => {
         const url = "https://api.virtuoussoftware.com/api/ContactNote";
+        const noteCreator = `Note Created By: ${userName}\n\n`;
         data = {
             contactId: contactID,
             type: noteType,
-            note: noteContent,
+            note: noteCreator + noteContent,
         }
         axios.post(url, data, 
             {headers: {'Authorization': `Bearer ${process.env.VIRTUOUS_TOKN}`, 'Content-Type': 'application/json'}

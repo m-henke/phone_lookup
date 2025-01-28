@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 function addNewNote() {
     document.getElementById('noteModal').style.display = 'block';
 }
@@ -8,14 +6,15 @@ function closeModal() {
     document.getElementById('noteModal').style.display = 'none';
 }
 
-function submitNote(contactID) {
+function submitNote(contactID, userName) {
     const noteType = document.getElementById('noteType').value;
     const noteContent = document.getElementById('noteContent').value;
 
     const data = {
         contactId: contactID,
         type: noteType,
-        note: noteContent
+        note: noteContent,
+        userName: userName
     }
 
     fetch('/new-note', {

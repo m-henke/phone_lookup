@@ -17,7 +17,7 @@ server.get('/', (req, res) => {
 
 // Route for handling new note submission
 server.post('/new-note', async (req, res) => {
-    postNewNote(req.body.contactId, req.body.type, req.body.note).then(response => {
+    postNewNote(req.body.contactId, req.body.type, req.body.note, req.body.userName).then(response => {
         log(`Note added successfully for: ${req.body.contactId}`);
         res.json({
             success: true
@@ -32,6 +32,7 @@ server.post('/new-note', async (req, res) => {
 
 server.get('/handle-call', async (req, res) => {
     const number = req.query.phone_number;
+    const user_name = req.query.user_name;
     const formatted_number = "(".concat(number.slice(0, 3), ") ", number.slice(3, 6), "-", number.slice(6))
 
     if (number.length != 10) {
@@ -40,7 +41,7 @@ server.get('/handle-call', async (req, res) => {
         return;
     }
 
-    log(`Received a call from: ${formatted_number}`);
+    log(`${user_name} received a call from: ${formatted_number}`);
 
     // Search database for user based on phone number
     var rows = [];
@@ -90,7 +91,7 @@ server.get('/handle-call', async (req, res) => {
     // User not in our system
     if (rows.length == 0) {
         log(`No entries found for: ${formatted_number}`);
-        res.render('handle_call', {phone_number: formatted_number, found_user: false, user: null, note: null, noteTypes: null});
+        res.render('handle_call', {phone_number: formatted_number, found_user: false, user: null, note: null, noteTypes: null, userName: user_name});
         return;
     }
 
@@ -113,7 +114,7 @@ server.get('/handle-call', async (req, res) => {
     const noteTypes = await queryDatabase('SELECT * FROM noteTypes');
 
     // Render page with user info
-    res.render('handle_call', {phone_number: formatted_number, found_user: true, user: rows[0], note, noteTypes});
+    res.render('handle_call', {phone_number: formatted_number, found_user: true, user: rows[0], note, noteTypes, userName: user_name});
 });
 
 // Start server on port
