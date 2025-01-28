@@ -12,7 +12,6 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
 - Note Management: Add new notes to a contact's profile.
 - Web Interface: User-friendly web interface for displaying contact information and managing notes.
 - Automatic Database Updates: The database will automatically update itself with new contact information from Virtuous CRM.
-  Project Structure
 
 **Key Files and Directories**
 - src/data/create_database.py: Script to create and populate the local SQLite database with contact information and note types.
