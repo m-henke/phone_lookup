@@ -27,11 +27,10 @@ const logger = createLogger({
     transports: [
         new transports.Console({
             level: 'info',
-            silent: process.env.LOG_LEVEL === 'error',
             format: infoConsoleFormat
         }),
         new transports.File({ 
-            filename: "errors.log", 
+            filename: "logs/errors.log", 
             level: 'error',
             format: fileFormat
         })

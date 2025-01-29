@@ -1,4 +1,4 @@
 node_modules/
 src/data/*.csv
 src/data/*.db
-errors.log
+logs/*.log
