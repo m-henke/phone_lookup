@@ -10,11 +10,11 @@
 <body>
     <% if (!found_user) { %>
         <div class="contact-card">
-            <h3><%= phone_number %></h3>
+            <h3><%= formatted_number %></h3>
             <p>Contact Not Found</p>
-            <button onclick="goToWebsite(1)">Virtuous Lookup</button>
-            <button onclick="goToWebsite(2)">Whitepages Lookup</button>
-            <button onclick="goToWebsite(3)">Been Verified Lookup</button>
+            <button onclick="goToWebsite(1, '<%= number %>')">Virtuous Lookup</button>
+            <button onclick="goToWebsite(2, '<%= number %>')">Whitepages Lookup</button>
+            <button onclick="goToWebsite(3, '<%= number %>')">Been Verified Lookup</button>
         </div>
     <% } else { %>
         <div class="contact-card">
@@ -22,7 +22,7 @@
             <p><span class="label">Full Name:</span> <%= user.FullName %></p>
             <p><span class="label">IndividualID:</span> <%= user.IndividualID %></p>
             <p><span class="label">Contact ID:</span> <%= user.ContactID %></p>
-            <p><span class="label">Phone Number:</span> <%= phone_number %></p>
+            <p><span class="label">Phone Number:</span> <%= formatted_number %></p>
             <p><span class="label">Email:</span> <%= user.Email %></p>
             <p><span class="label">Last Gift Date:</span> <%= user.LastGiftDate %></p>
             <p><span class="label">Last Gift Amount:</span> $<%= user.LastGiftAmount %></p>

@@ -1,5 +1,5 @@
 // Used on index page to create links for the buttons
-function goToWebsite(buttonNumber) {
+function goToWebsite(buttonNumber, phoneNumber) {
     let baseURL = "";
     switch (buttonNumber) {
         case 1:

@@ -1,5 +1,6 @@
 let phoneNumber = '';
 
+// Makes sure the user is entering a valid number
 function validatePhoneNumber(event) {
     event.preventDefault(); // Prevent form submission
     var phoneInput = document.getElementById('phone').value;
