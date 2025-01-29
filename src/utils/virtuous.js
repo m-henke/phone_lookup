@@ -8,7 +8,11 @@ async function getContactNotes(contactID) {
         });
         return response.data.list[0];
     } catch (error) {
-        throw new Error(error.response ? error.response.data : error.message);
+        if (error.response.data instanceof Object) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error(error.response.data);
+        }
     }
 }
 
@@ -30,7 +34,11 @@ async function postNewNote(contactID, noteType, noteContent, userName) {
         });
         return response.data;
     } catch (error) {
-        throw new Error(error.response ? error.response.data : error.message);
+        if (error.response.data instanceof Object) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error(error.response.data);
+        }
     }
 }
 
@@ -59,7 +67,11 @@ async function searchForIndividual(number) {
         });
         return response.data.list;
     } catch (error) {
-        throw new Error(error.response ? error.response.data : error.message);
+        if (error.response.data instanceof Object) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error(error.response.data);
+        }
     }
 }
 
@@ -77,7 +89,11 @@ async function searchForContact(contactId) {
             amount: response.data.lastGiftAmount || ""
         };
     } catch (error) {
-        throw new Error(error.response ? error.response.data : error.message);
+        if (error.response.data instanceof Object) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error(error.response.data);
+        }
     }
 }
 

@@ -10,7 +10,7 @@ router.get('/handle-call', async (req, res) => {
 
     if (number.length !== 10) {
         log(`Received an invalid number: ${formatted_number}`);
-        res.status(400).json({ success: false, message: 'Invalid phone number' });
+        res.status(400).json({ success: false, message: 'Invalid phone number. Visit localhost:8080/ to enter manually.' });
         return;
     }
 
@@ -31,7 +31,7 @@ router.get('/handle-call', async (req, res) => {
             log(`Searching Virtuous for contact with phone number: ${formatted_number}`);
             rows = await searchForIndividual(number);
         } catch (err) {
-            log(`Error: ${err}`);
+            log(`Searching for Individual ${err}`);
         }
 
         // Add contact to local database
@@ -55,7 +55,7 @@ router.get('/handle-call', async (req, res) => {
                 await insertDatabase(data);
                 rows = await queryDatabase('SELECT * FROM users WHERE PhoneNumber = ?', [number]);
             } catch (err) {
-                log(`Error: ${err}`);
+                log(`Searching for Contact ${err}`);
                 log(`Contact not added to local database`);
             }
         }
@@ -80,7 +80,7 @@ router.get('/handle-call', async (req, res) => {
             cleanNote(note);
         }
     } catch (err) {
-        log(`Error: ${err}`);
+        log(`Get Contact Notes ${err}`);
     }
 
     // Get note types

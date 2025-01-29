@@ -10,6 +10,7 @@ router.post('/new-note', async (req, res) => {
         res.json({ success: true });
     } catch (error) {
         log(`Failed to add note for: ${req.body.contactId}`);
+        log(`Adding Note ${error}`)
         res.json({ success: false });
     }
 });
