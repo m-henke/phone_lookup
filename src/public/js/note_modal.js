@@ -1,4 +1,4 @@
-function addNewNote() {
+function openModal() {
     document.getElementById('noteModal').style.display = 'block';
 }
 
@@ -9,6 +9,7 @@ function closeModal() {
 function submitNote(contactID, userName) {
     const noteType = document.getElementById('noteType').value;
     const noteContent = document.getElementById('noteContent').value;
+    const responseMessage = document.getElementById('responseMessage');
 
     const data = {
         contactId: contactID,
@@ -16,7 +17,7 @@ function submitNote(contactID, userName) {
         note: noteContent,
         userName: userName
     }
-
+    
     fetch('/new-note', {
         method: 'POST',
         headers: {
@@ -26,7 +27,6 @@ function submitNote(contactID, userName) {
     })
     .then(response => response.json())
     .then(data => {
-        const responseMessage = document.getElementById('responseMessage');
         responseMessage.style.display = 'block';
         if (data.success == true) {
             console.log('Note added successfully!');
@@ -40,6 +40,9 @@ function submitNote(contactID, userName) {
     })
     .catch((error) => {
         console.error('Error:', error);
+        responseMessage.style.display = 'block';
+        responseMessage.textContent = error;
+        responseMessage.style.color = 'red';
     });
 
     closeModal();

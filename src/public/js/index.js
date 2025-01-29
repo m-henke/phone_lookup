@@ -17,7 +17,7 @@ function validatePhoneNumber(event) {
     } else {
         phoneNumber = phoneInput;
         errorMessage.style.display = 'none'; 
-        phoneNumberDisplay.textContent = "(".concat(phoneInput.slice(0, 3) + ") ", phoneInput.slice(3, 6), "-", phoneInput.slice(6));
+        phoneNumberDisplay.textContent = `(${phoneInput.slice(0, 3)}) ${phoneInput.slice(3, 6)}-${phoneInput.slice(6)}`;
         inputContainer.classList.add('hidden');
         buttonsContainer.classList.remove('hidden');
         phoneNumberContainer.classList.remove('hidden');

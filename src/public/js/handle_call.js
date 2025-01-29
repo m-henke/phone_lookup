@@ -1,13 +1,11 @@
-let phoneNumber = getQueryVariable("phone_number");
-
+// Gets the phone number for the create_links.js file
 function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i=0;i<vars.length;i++) {
-        var pair = vars[i].split("=");
-        if (pair[0] == variable) {
-        return pair[1];
-        }
-    } 
-    alert('Query Variable ' + variable + ' not found');
+    const params = new URLSearchParams(window.location.search);
+    return params.get(variable) || null;
+}
+
+const phoneNumber = getQueryVariable("phone_number");
+
+if (!phoneNumber) {
+    console.error('Query Variable "phone_number" not found');
 }
