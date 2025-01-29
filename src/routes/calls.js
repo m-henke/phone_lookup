@@ -9,29 +9,29 @@ router.get('/handle-call', async (req, res) => {
     const formatted_number = `(${number.slice(0, 3)}) ${number.slice(3, 6)}-${number.slice(6)}`;
 
     if (number.length !== 10) {
-        log(`Received an invalid number: ${formatted_number}`);
+        log('error', "validate number", `Received an invalid number: ${formatted_number}`);
         res.status(400).json({ success: false, message: 'Invalid phone number. Visit localhost:8080/ to enter manually.' });
         return;
     }
 
-    log(`${user_name} received a call from: ${formatted_number}`);
+    log('info', "", `${user_name} received a call from: ${formatted_number}`);
 
     // Search database for user based on phone number
     let rows = [];
     try {
         rows = await queryDatabase('SELECT * FROM users WHERE PhoneNumber = ?', [number]);
     } catch (err) {
-        log(`Error: ${err}`);
+        log('error', 'query database', err);
     }
 
     // If not in database search Virtuous
     if (rows.length === 0) {
         try {
-            log(`No entries in database for ${formatted_number}`);
-            log(`Searching Virtuous for contact with phone number: ${formatted_number}`);
+            log('info', "", `No entries in database for ${formatted_number}`);
+            log('info', "", `Searching Virtuous for contact with phone number: ${formatted_number}`);
             rows = await searchForIndividual(number);
         } catch (err) {
-            log(`Searching for Individual ${err}`);
+            log('error', 'search for individual', err);
         }
 
         // Add contact to local database
@@ -55,32 +55,32 @@ router.get('/handle-call', async (req, res) => {
                 await insertDatabase(data);
                 rows = await queryDatabase('SELECT * FROM users WHERE PhoneNumber = ?', [number]);
             } catch (err) {
-                log(`Searching for Contact ${err}`);
-                log(`Contact not added to local database`);
+                log('error', "searching virtuous for contact", err);
+                log('info' , "", `Contact not added to local database`);
             }
         }
     }
 
     // User not in our system
     if (rows.length === 0) {
-        log(`No entries found for: ${formatted_number}`);
+        log('info', "", `No entries found for: ${formatted_number}`);
         res.render('handle_call', { number, formatted_number, found_user: false, user: null, note: null, noteTypes: null, userName: user_name });
         return;
     }
 
-    log(`Found user: ${rows[0].FullName}`);
+    log('info', "", `Found user: ${rows[0].FullName}`);
 
     // Get contact notes
     let note;
     try {
         note = await getContactNotes(rows[0].ContactID);
         if (note === undefined) {
-            log(`No notes found for: ${rows[0].FullName}`);
+            log('info', "", `No notes found for: ${rows[0].FullName}`);
         } else {
             cleanNote(note);
         }
     } catch (err) {
-        log(`Get Contact Notes ${err}`);
+        log('error', "getting contact notes", err);
     }
 
     // Get note types

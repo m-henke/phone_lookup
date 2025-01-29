@@ -20,5 +20,5 @@ server.use('/', callsRouter);
 
 // Start server on port
 server.listen(port, () => {
-    log(`Server is running on http://localhost:${port}`);
+    log('info', "", `Server is running on http://localhost:${port}`);
 });
