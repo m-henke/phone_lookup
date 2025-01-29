@@ -5,16 +5,36 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f4f4f4;
+    background-color: rgba(255,255,255,0.7);
+    background-image: url("../images/MTM_logo.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-blend-mode: lighten;
 }
 
-.container {
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(90, 90, 90);
+    color: white;
     text-align: center;
-    padding-top: 540px;
 }
 
-.buttons-container {
-    margin-top: 20px;
+.contact-card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 400px;
+    word-wrap: break-word; 
+    word-break: break-word; 
+    overflow-wrap: break-word;
 }
 
 .contact-card h3 {
@@ -23,21 +43,6 @@ body {
 
 .contact-card p {
     text-align: left;
-}
-
-.contact-card {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 20px;
-    margin: 5px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    width: 400px;
-    word-wrap: break-word; 
-    word-break: break-word; 
-    overflow-wrap: break-word;
 }
 
 button {
