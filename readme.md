@@ -24,9 +24,12 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
 - server.js: Main server file that sets up the Express server and routes.
 
 **Installation**
+0. Download and install node.js and python
 1. Download the repository
-2. Open terminal to downloaded repository
-3. Install dependencies: npm install
+2. Open terminal to downloaded repository (phone_lookup/)
+3. Install dependencies
+    - npm install
+    - pip install requests
 4. Create local database:
       - Download this query using the pre selected fields: https://app.virtuoussoftware.com/Generosity/Query/Editor/5400
       - Move the downloaded csv file to the src/data folder
