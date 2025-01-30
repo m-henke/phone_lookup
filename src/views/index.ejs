@@ -9,6 +9,11 @@
 </head>
 <body>
     <div class="container">
+        <% if (invalid_number) { %>
+            <div>
+                <p>Invalid number was received try manually entering it</p>
+            </div>
+        <% } %>
         <div class="input-container">
             <label for="phone"><b>Enter phone number:</b></label>
             <input type="tel" id="phone" placeholder="Phone number" required>

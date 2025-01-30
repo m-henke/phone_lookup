@@ -10,7 +10,7 @@ router.get('/handle-call', async (req, res) => {
 
     if (number.length !== 10) {
         log('error', "validate number", `Received an invalid number: ${formatted_number}`);
-        res.status(400).json({ success: false, message: 'Invalid phone number. Visit localhost:8080/ to enter manually.' });
+        res.redirect("/?invalid_number=true");
         return;
     }
 
