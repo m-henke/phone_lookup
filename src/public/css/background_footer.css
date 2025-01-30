@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #374a84 0%, #1a81bd 100%), url("../images/MelTrotter_Logo_White.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: contain;
+    background-blend-mode: lighten;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(90, 90, 90);
+    color: white;
+    text-align: center;
+}
