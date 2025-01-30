@@ -41,7 +41,7 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
           - Email Address
           - Last Gift Date
           - Last Gift Amount
-    - Open terminal to src/data
+    - Open terminal to phone_lookup/src/data
     - Run create_database script: python create_database.py
     - Do not re-run after the database has been created
 5. Create environmental variable
