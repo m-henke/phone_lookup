@@ -5,10 +5,9 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background: linear-gradient(to bottom, #374a84 0%, #1a81bd 100%), url("../images/MelTrotter_Logo_White.png");
+    background: linear-gradient(to bottom, #374a84 0%, #1a81bd 100%), url("../images/MelTrotter_Logo_White_Small.png");
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: contain;
     background-blend-mode: lighten;
 }
 
