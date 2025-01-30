@@ -117,10 +117,6 @@ class DatabaseManager:
 
 
 if __name__ == "__main__":
-    # need to fix how these paths are gotten
-    # need to add environmental variable to readme 
-    # data_path = os.path.join(os.getcwd(), "src", "data", "individualsForPhoneLookup.csv")
-    # db_path = os.path.join(os.getcwd(), "src", "data", "VirtuousData.db")
     dbManager = DatabaseManager("individualsForPhoneLookup.csv", "VirtuousData.db")
     dbManager.create_database()
     print("number contacts", dbManager.query_database(f"SELECT COUNT(IndividualID) FROM users"))
