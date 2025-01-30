@@ -41,6 +41,12 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
     - Open terminal to src/data
     - Run create_database script: python create_database.py
     - Do not re-run after the database has been created
+5. Create environmental variable
+    - Copy "Phone Call Lookup" API key from Virtuous
+        - Settings -> all settings -> connectivity -> api keys
+    - Open command prompt and enter: setx VIRTUOUS_TOKN "<key>"
+        - Make sure to keep the quotation marks
+        - setx VIRTUOUS_TOKN "xxxxxxx-xxxxxxx-xxxxxxx"
 
 **Usage**
 1. Open terminal to phone_lookup/
