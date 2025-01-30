@@ -25,7 +25,7 @@ router.get('/handle-call', async (req, res) => {
     }
 
     // If not in database search Virtuous
-    if (rows.length === 0) {
+    if (rows.length == 0) {
         try {
             log('info', "", `No entries in database for ${formatted_number}`);
             log('info', "", `Searching Virtuous for contact with phone number: ${formatted_number}`);
@@ -50,14 +50,31 @@ router.get('/handle-call', async (req, res) => {
                     `${rows[0].firstName} ${rows[0].lastName}`,
                     rows[0].id, rows[0].contactId,
                     number, email,
-                    giftData.date, giftData.amount
+                    giftData.date, giftData.amount.replace('$', '')
                 ];
                 await insertDatabase(data);
                 rows = await queryDatabase('SELECT * FROM users WHERE PhoneNumber = ?', [number]);
             } catch (err) {
                 log('error', "searching virtuous for contact", err);
-                log('info' , "", `Contact not added to local database`);
+                log('info' , "", 'Contact not added to local database');
             }
+        }
+    // In the database check to see if the gift data is up to date
+    } else {
+        try {
+            let giftData = await searchForContact(rows[0].ContactID);
+            giftData.amount = giftData.amount.replace('$', '');
+            if (giftData.date != rows[0].LastGiftDate || giftData.amount != rows[0].LastGiftAmount) {
+                let query = "UPDATE users SET LastGiftDate = ?, LastGiftAmount = ? WHERE IndividualID = ?";
+                let data = [giftData.date, giftData.amount, rows[0].IndividualID];
+                await queryDatabase(query, data);
+                rows[0].LastGiftDate = giftData.date;
+                rows[0].LastGiftAmount = giftData.amount;
+                log('info', "", `Updated latest gift info for ${rows[0].FullName}`);
+            }
+        } catch (err) {
+            log('error', "getting updated gift data", err);
+            log('info', "", "No new gift data fetched");
         }
     }
 
