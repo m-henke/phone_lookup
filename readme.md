@@ -11,8 +11,10 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
 - Virtuous CRM Integration: Search for contact information and notes in the Virtuous CRM system.
 - Note Management: Add new notes to a contact's profile.
 - Web Interface: User-friendly web interface for displaying contact information and managing notes.
-- Automatic Database Updates: The database will automatically update itself with new contact information from Virtuous CRM as calls are made.
-- Automatic Database Updates: The database will automatically update its note types every day at midnight.
+- Automatic Database Updates: The database will automatically update itself with new contact information from Virtuous CRM as calls come in.
+    - Adding a new contact
+    - Updating contact gift information
+- Automatic Database Updates: The database will automatically update its note types every day at midnight using cron jobs.
 - Logging: Uses Winston package to handle logging to terminal and to log file.
 - Send notification to microsoft teams when an error occurrs (Advancement -> App Status)
 
