@@ -37,13 +37,30 @@ const logger = createLogger({
     ]
 });
 
+const callLogger = createLogger({
+    transports: [
+        new transports.File({
+            filename: "logs/calls.log",
+            format: fileFormat
+        })
+    ]
+})
+
 // Used to call the logger from the rest of the program
 function log(level, location, data) {
-    logger.log({
-        level: level,
-        location: location,
-        data: data
-    });
+    if (level == 'callLog') {
+        callLogger.log({
+            level: "info",
+            location: location,
+            data: data
+        });
+    } else {
+        logger.log({
+            level: level,
+            location: location,
+            data: data
+        });
+    }
 }
 
 module.exports = { log };

@@ -15,6 +15,7 @@ router.get('/handle-call', async (req, res) => {
     }
 
     log('info', "", `${user_name} received a call from: ${formatted_number}`);
+    log('callLog', "", `${user_name} received a call from: ${formatted_number}`);
 
     // Search database for user based on phone number
     let rows = [];
