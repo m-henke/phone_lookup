@@ -1,5 +1,21 @@
 const axios = require('axios');
 
+async function getNoteTypes() {
+    const url = "https://api.virtuoussoftware.com/api/ContactNote/Types";
+    try {
+        const response = await axios.get(url, {
+            headers: {'Authorization': `Bearer ${process.env.VIRTUOUS_TOKN}`}
+        });
+        return response.data;
+    } catch {
+        if (error.response.data instanceof Object) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error(error.response.data);
+        }
+    }
+}
+
 async function getContactNotes(contactID) {
     const url = `https://api.virtuoussoftware.com/api/ContactNote/ByContact/${contactID}?sortBy=CreatedDateTime&descending=False&skip=0&take=1`;
     try {
@@ -103,6 +119,7 @@ function cleanNote(note) {
 }
 
 module.exports = {
+    getNoteTypes,
     getContactNotes,
     postNewNote,
     searchForIndividual,

@@ -1,11 +1,16 @@
 const express = require('express');
 const path = require('path');
+const cron = require('node-cron');
 const { log } = require('./utils/logger');
 const indexRouter = require('./routes/index');
 const notesRouter = require('./routes/notes');
 const callsRouter = require('./routes/calls');
+const { updateNoteTypes } = require('./utils/database');
 const server = express();
 const port = 8080;
+
+// Set cron job to update notetypes daily at midnight
+cron.schedule('0 0 * * *', updateNoteTypes);
 
 // Setup view engine and static files
 server.set('view engine', 'ejs');
