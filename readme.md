@@ -32,11 +32,11 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
 1. Download the repository
 2. Open terminal to downloaded repository (phone_lookup/)
 3. Install dependencies
-    - npm install
-    - pip install requests
+    - `npm install`
+    - `pip install requests`
 4. Create local database:
-      - Download this query using the pre selected fields: https://app.virtuoussoftware.com/Generosity/Query/Editor/5400
-      - Move the downloaded csv file to the src/data folder
+      - Download this query using the pre selected fields: [Virtuous Query](https://app.virtuoussoftware.com/Generosity/Query/Editor/5400)
+      - Move the downloaded csv file to the `src/data` folder
       - Confirm that the headers are in the following order
           - Full Name
           - Individual ID
@@ -45,19 +45,21 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
           - Email Address
           - Last Gift Date
           - Last Gift Amount
-    - Open terminal to phone_lookup/src/data
-    - Run create_database script: python create_database.py
+    - Open terminal to `phone_lookup/src/data`
+    - Run create_database script: `python create_database.py`
     - Do not re-run after the database has been created
 5. Create environmental variable
     - Copy "Phone Call Lookup" API key from Virtuous
         - Settings -> all settings -> connectivity -> api keys
-    - Open command prompt and enter: setx VIRTUOUS_TOKN "<key>"
+    - Open command prompt and enter: `setx VIRTUOUS_TOKN "<key>"`
         - Make sure to keep the quotation marks
-        - setx VIRTUOUS_TOKN "xxxxxxx-xxxxxxx-xxxxxxx"
+        - Example: `setx VIRTUOUS_TOKN "xxxxxxx-xxxxxxx-xxxxxxx"`
+
+**Vonage Setup**
 
 **Usage**
-1. Open terminal to phone_lookup/
-2. Start server: npm start
+1. Open terminal to `phone_lookup/`
+2. Start server: `npm start`
 
 **Contact**
 For any issues or questions, please contact Michael Henke at michaelhenke@meltrotter.org.
