@@ -28,13 +28,13 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
 - server.js: Main server file that sets up the Express server and routes.
 
 **Installation**
-0. Download and install node.js and python
-1. Download the repository
-2. Open terminal to downloaded repository (phone_lookup/)
-3. Install dependencies
+1. Download and install [Node.js](https://nodejs.org/en/download) and [Python](https://www.python.org/downloads/)
+2. Download the repository
+3. Open terminal to downloaded repository (phone_lookup/)
+4. Install dependencies
     - `npm install`
     - `pip install requests`
-4. Create local database:
+5. Create local database:
       - Download this query using the pre selected fields: [Virtuous Query](https://app.virtuoussoftware.com/Generosity/Query/Editor/5400)
       - Move the downloaded csv file to the `src/data` folder
       - Confirm that the headers are in the following order
@@ -48,10 +48,10 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
     - Open terminal to `phone_lookup/src/data`
     - Run create_database script: `python create_database.py`
     - Do not re-run after the database has been created
-5. Create environmental variable
+6. Create environmental variable
     - Copy "Phone Call Lookup" API key from Virtuous
         - Settings -> all settings -> connectivity -> api keys
-    - Open command prompt and enter: `setx VIRTUOUS_TOKN "<key>"`
+    - Open terminal and enter: `setx VIRTUOUS_TOKN "<key>"`
         - Make sure to keep the quotation marks
         - Example: `setx VIRTUOUS_TOKN "xxxxxxx-xxxxxxx-xxxxxxx"`
 
