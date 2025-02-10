@@ -51,11 +51,21 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
 6. Create environmental variable
     - Copy "Phone Call Lookup" API key from Virtuous
         - Settings -> all settings -> connectivity -> api keys
-    - Open terminal and enter: `setx VIRTUOUS_TOKN "<key>"`
-        - Make sure to keep the quotation marks
-        - Example: `setx VIRTUOUS_TOKN "xxxxxxx-xxxxxxx-xxxxxxx"`
+    - Copy webhook URL from Teams
+       - App Status Channel -> open sidebar on right -> manage channel -> connectors -> edit -> configure incoming webhook -> create one and copy url
+    - Open terminal
+       - Windows
+          - Example `setx VIRTUOUS_TOKN "xxxxxxx-xxxxxxx-xxxxxxx"`
+          - Example `setx TEAMS_WEBHOOK "your link"`
+       - Linux
+          - Example `export VIRTUOUS_TOKN="xxxxxxx-xxxxxxx-xxxxxxx"`
+          - Example `export TEAMS_WEBHOOK="your link"`
 
 **Vonage Setup**
+1. Open Vonage Business application
+2. Go to settings -> web launcher
+3. Change the end to your name and paste into the box that says `Enter Website URL`
+    - http://app04.meltrotter.net/handle-call?phone_number=%%phone_number_without_country_code%%&user_name=Your Name
 
 **Usage**
 1. Open terminal to `phone_lookup/`
