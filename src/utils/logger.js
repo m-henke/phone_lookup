@@ -49,7 +49,7 @@ const callLogger = createLogger({
 })
 
 function notifyTeams(ErrorMessage, Location) {
-    const url = "https://meltrotter.webhook.office.com/webhookb2/65ce0c5d-4a07-4134-b2e8-9f91c4a6b102@c7244036-c976-4b4d-8c2a-a9f040707cfc/IncomingWebhook/62ca64630800426ea00863063fdf3683/423faad8-318d-44b6-9d50-b604ecae8cd7/V20KjcE9cTroekdvEtRXqMYXvuOH0pH3NP_5BYZh5n_VQ1";
+    const url = process.env.TEAMS_WEBHOOK;
     const currentDate = new Date();
     if (ErrorMessage instanceof Error) {
         ErrorMessage = ErrorMessage.message;
