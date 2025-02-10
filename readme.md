@@ -58,10 +58,15 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
           - Example `setx VIRTUOUS_TOKN "xxxxxxx-xxxxxxx-xxxxxxx"`
           - Example `setx TEAMS_WEBHOOK "your link"`
        - Linux
-          - Run this in the terminal `nano ~/.bashrc`
-          - Add the following to the end of the file
+          - Run this in the terminal `nano start-phone-lookup-server.sh` and add the following lines
+              - `#!/bin/bash`
               - `export VIRTUOUS_TOKN="xxxxxxx-xxxxxxx-xxxxxxx"`
               - `export TEAMS_WEBHOOK="https://yourlink"`
+              - `cd path/to/phone_lookup/`
+              - `npm start`
+          - Run this command `chmod +x start-phone-lookup-server.sh`
+          - Run this command `crontab -e`
+              - Add this to the end of the file `@reboot path/to/start-phone-lookup-server.sh`
 
 **Vonage Setup**
 1. Open Vonage Business application
