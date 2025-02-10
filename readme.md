@@ -58,8 +58,10 @@ The Phone Lookup Tool is designed to assist in retrieving information about indi
           - Example `setx VIRTUOUS_TOKN "xxxxxxx-xxxxxxx-xxxxxxx"`
           - Example `setx TEAMS_WEBHOOK "your link"`
        - Linux
-          - Example `export VIRTUOUS_TOKN="xxxxxxx-xxxxxxx-xxxxxxx"`
-          - Example `export TEAMS_WEBHOOK="your link"`
+          - Run this in the terminal `nano ~/.bashrc`
+          - Add the following to the end of the file
+              - `export VIRTUOUS_TOKN="xxxxxxx-xxxxxxx-xxxxxxx"`
+              - `export TEAMS_WEBHOOK="https://yourlink"`
 
 **Vonage Setup**
 1. Open Vonage Business application
